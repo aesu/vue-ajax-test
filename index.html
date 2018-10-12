@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<htm lang="es">
+<head>
+	<meta charset="utf-8">
+	<title>Consumir datos con Vue y Ajax</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+</head>
+<body>
+	<div id="app" class="container">
+		<div class="row">
+			<div class="col-sm-4">
+				<h1>Datos</h1>
+				<ul class="list-group">
+					<li v-for="item in lists" class="list-group-item">
+						{{ item.name }}
+					</li>
+				</ul>
+			</div>
+			<pre class="col-sm-8">
+				{{ $data }}
+			</pre>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+	<script>
+		var urlData = 'https://jsonplaceholder.typicode.com/users';
+		var vm = new Vue({
+			el:'#app',
+			created: function () {
+				this.getData();
+			},
+			data: {
+				lists: []
+			},
+			methods:{
+				getData: function () {
+					axios.get(urlData).then(response=>{
+						this.lists = response.data;
+					})
+				}
+			}
+		});
+	</script>
+</body>
+</html>
